@@ -1,0 +1,9 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1783363117
+README.md::TextFile::-1::1783362897::0::1::::<><><>0<>0<><>::
+::res://Models/::1783362897
+sword.blend::PackedScene::3076040469460378518::1783362897::1783363139::1::::<><><>0<>0<>f892b9131e11ada2f0412fe6d9bcf12d<>res://.godot/imported/sword.blend-a35a14017899599fd61559471196249f.scn::
+::res://Scenes/::1783362897
+main.tscn::PackedScene::2991908719853285740::1783362897::0::1::::<><><>0<>0<><>::uid://cisq3gawhlvgk::::res://Scripts/player.gd<>uid://cndxt01rt7le8::::res://sword.blend
+::res://Scripts/::1783362897
+player.gd::GDScript::5372532706326629042::1783362897::0::1::::<>CharacterBody3D<><>0<>0<><>::
