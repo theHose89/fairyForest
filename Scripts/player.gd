@@ -3,6 +3,8 @@ extends CharacterBody3D
 signal sword_thrown
 signal return_sword
 signal swing_sword
+signal give_chain
+signal take_chain
 
 @export var SPEED = 5
 @export var JUMP_VELOCITY = 4.5
@@ -16,7 +18,10 @@ signal swing_sword
 @onready var sword_proj := load("res://Scenes/sword_projectile.tscn")
 @onready var main := get_tree().get_root()
 @onready var sword_hit_box := $"Pivot/SwordHitBox"
+@onready var reel_crank = $Player/Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCameraHands/Reel/woodReel/crank
 
+var is_grappeling := false
+var sword_grapple
 
 #rotate head when mouse moved
 func _unhandled_input(event: InputEvent) -> void:
@@ -43,11 +48,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if(event.is_action_pressed("Special Action")):
 		throw_sword()
 		sword_thrown.emit()
-	elif event.is_action_released("Special Action"):
+	if event.is_action_released("Special Action"):
 		return_sword.emit()
-	elif(event.is_action_pressed("Action")):
-		if Input.is_action_pressed("Special Action"):
-			return
+	if Input.is_action_pressed("Special Action"):
+		if event.is_action("Wheel Up"):
+			take_chain.emit()
+			#animate reel
+		elif event.is_action("Wheel Down"):
+			give_chain.emit()
+			#animate reel
+		return
+	if(event.is_action_pressed("Action")):
+		
 		swing_sword.emit()
 		for body in sword_hit_box.get_overlapping_bodies():
 			if(body.name != "Player"):
@@ -67,6 +79,10 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+
+	#hand off physics processing to grapple script
+	#if is_grappeling:
+		#return
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -89,6 +105,7 @@ func _physics_process(delta: float) -> void:
 			velocity.z += direction.z * SPEED/100      #with speed on ground
 		else:
 			pass
+	
 	move_and_slide()
 
 func basic_sword_knockback():
@@ -112,7 +129,16 @@ func throw_sword():
 	proj.spawnPos = global_position
 	proj.spawnPos.y += 0.5 #offset spawn so sword comes out of faces
 	proj.spawnRot = rotation
+	proj.sword_hit.connect(sword_hit)
+	proj.sword_recalled.connect(sword_recall)
 	
 	main.add_child.call_deferred(proj)
 	
+func sword_hit():
+	print("hit")
+	is_grappeling = true
+
+func sword_recall():
+	print("recall")
+	is_grappeling = false
 	

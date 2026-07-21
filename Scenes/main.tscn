@@ -194,7 +194,6 @@ environment = SubResource("Environment_8gbba")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=577565237]
 transform = Transform3D(0.49034745, -0.28248885, 0.8244753, 0.010388263, 0.94783956, 0.31857863, -0.8714651, -0.14764935, 0.4677052, 0, 4.570066, 0)
-layers = 3
 
 [node name="Player" parent="." unique_id=522378305 instance=ExtResource("1_jjgbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87856984, 0)
