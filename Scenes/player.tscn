@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://ckw1j5rm1lukg"]
+
+[ext_resource type="Script" uid="uid://cisq3gawhlvgk" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="PackedScene" uid="uid://dmws5r41qehas" path="res://Scenes/playerHands.tscn" id="2_6t5aa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jjgbg"]
+size = Vector3(0.6051254, 1.645, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvnsp"]
+size = Vector3(4.6492963, 0.5736618, 0.8342438)
+
+[node name="Player" type="CharacterBody3D" unique_id=522378305]
+script = ExtResource("1_cvnsp")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="." unique_id=933443494]
+shape = SubResource("BoxShape3D_jjgbg")
+
+[node name="Pivot" type="Node3D" parent="." unique_id=1321278992]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66011333, 0)
+
+[node name="Bobber" type="Node3D" parent="Pivot" unique_id=1584591752]
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/Bobber" unique_id=168960777]
+cull_mask = 1048573
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Pivot/Bobber/Camera3D" unique_id=1108482288]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="Pivot/Bobber/Camera3D/SubViewportContainer" unique_id=2043008695]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="HandsCamera" parent="Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport" unique_id=1967303725 instance=ExtResource("2_6t5aa")]
+cull_mask = 1047554
+
+[node name="SwordHitBox" type="Area3D" parent="Pivot" unique_id=596767796]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/SwordHitBox" unique_id=1002013293]
+transform = Transform3D(1, 0, 6.2584877e-07, 0, 1, 0, -6.2584877e-07, 0, 1, 1.8292422, -0.06853855, -0.14350244)
+shape = SubResource("BoxShape3D_cvnsp")
