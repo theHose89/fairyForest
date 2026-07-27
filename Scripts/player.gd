@@ -3,8 +3,7 @@ extends CharacterBody3D
 signal sword_thrown
 signal return_sword
 signal swing_sword
-signal give_chain
-signal take_chain
+
 
 @export var SPEED = 5
 @export var JUMP_VELOCITY = 4.5
@@ -18,10 +17,10 @@ signal take_chain
 @onready var sword_proj := load("res://Scenes/sword_projectile.tscn")
 @onready var main := get_tree().get_root()
 @onready var sword_hit_box := $"Pivot/SwordHitBox"
-@onready var reel_crank = $Player/Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCameraHands/Reel/woodReel/crank
+@onready var reel_crank = $Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCameraHands/Reel/woodReel/crank
 
-var is_grappeling := false
-var sword_grapple
+var grappel_point
+var sword_tugging := false
 
 #rotate head when mouse moved
 func _unhandled_input(event: InputEvent) -> void:
@@ -51,12 +50,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("Special Action"):
 		return_sword.emit()
 	if Input.is_action_pressed("Special Action"):
-		if event.is_action("Wheel Up"):
-			take_chain.emit()
-			#animate reel
-		elif event.is_action("Wheel Down"):
-			give_chain.emit()
-			#animate reel
 		return
 	if(event.is_action_pressed("Action")):
 		
@@ -89,20 +82,29 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("Left", "Right", "Forward", "Backwards")
 	#var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized().rotated(Vector3.RIGHT, head.rotation.y)
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if sword_tugging:
+		print("tugging")
+		#if global_position + input_dir is closer to grappel_point:
+		#	return
+
+	
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 			hands.bob(delta)
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
+			#velocity.x = move_toward(velocity.x, 0, SPEED)
+			#velocity.z = move_toward(velocity.z, 0, SPEED)
+			velocity.x -= velocity.x/4
+			velocity.z -= velocity.z/4
 			bobber.position.y = lerp(bobber.position.y, 0.0, delta*5)
 			bobber.position.x = lerp(bobber.position.x, 0.0, delta*5)
 	else:
 		if direction:
-			velocity.x += direction.x * SPEED/100      #speed divied to scale
-			velocity.z += direction.z * SPEED/100      #with speed on ground
+			velocity.x += direction.x * SPEED/50      #speed divied to scale
+			velocity.z += direction.z * SPEED/50      #with speed on ground
 		else:
 			pass
 	
@@ -135,10 +137,12 @@ func throw_sword():
 	main.add_child.call_deferred(proj)
 	
 func sword_hit():
-	print("hit")
-	is_grappeling = true
+	grappel_point = main.get_node("Sword Projectile").global_position
+	print(grappel_point)
 
 func sword_recall():
-	print("recall")
-	is_grappeling = false
+	sword_tugging = false
+	grappel_point = Vector3.ZERO
+	print(grappel_point)
+
 	
