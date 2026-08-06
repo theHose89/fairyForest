@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cgbo2rjwck0lg"]
 
 [ext_resource type="Script" uid="uid://drkcj7igeaed" path="res://Scripts/sword_projectile.gd" id="1_acdb1"]
+[ext_resource type="AudioStream" uid="uid://crgds3bf5pxig" path="res://Assets/snap.wav" id="2_728pj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5b8y"]
 resource_name = "steel"
@@ -150,3 +151,6 @@ node_a = NodePath("..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1723978826]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.0020026863, 0.004451491, -0.01825544)
 shape = SubResource("BoxShape3D_qkulm")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1888037523]
+stream = ExtResource("2_728pj")

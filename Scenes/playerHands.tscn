@@ -367,7 +367,7 @@ script = ExtResource("1_4y2wh")
 [node name="Hands" type="Node3D" parent="." unique_id=1136061683]
 
 [node name="Sword" type="Node3D" parent="Hands" unique_id=1403379672]
-transform = Transform3D(-0.17364815, 0, 0.98480743, 0, 0.99999994, 0, -0.98480743, 0, -0.17364815, 0.164, -0.047, -0.448)
+transform = Transform3D(-0.17364812, 0, 0.9848073, 0, 0.99999994, 0, -0.9848073, 0, -0.17364812, 0.164, -0.047, -0.448)
 
 [node name="sword_mesh" type="Node3D" parent="Hands/Sword" unique_id=439946249]
 transform = Transform3D(0.175, 0, 0, 0, 0.125, 0, 0, 0, 0.175, 0, 0, 0)

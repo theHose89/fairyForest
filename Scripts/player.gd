@@ -17,10 +17,11 @@ signal swing_sword
 @onready var sword_proj := load("res://Scenes/sword_projectile.tscn")
 @onready var main := get_tree().get_root()
 @onready var sword_hit_box := $"Pivot/SwordHitBox"
-@onready var reel_crank = $Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCameraHands/Reel/woodReel/crank
 
-var grappel_point
+var grappel_point := Vector3.ZERO
 var sword_tugging := false
+var is_moving = false
+var stopped = true
 
 #rotate head when mouse moved
 func _unhandled_input(event: InputEvent) -> void:
@@ -80,29 +81,42 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("Left", "Right", "Forward", "Backwards")
+	if input_dir.length() > 0:
+		is_moving = true
+	else: 
+		is_moving = false
 	#var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized().rotated(Vector3.RIGHT, head.rotation.y)
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
-	if sword_tugging:
-		print("tugging")
-		#if global_position + input_dir is closer to grappel_point:
-		#	return
 
 	
 	if is_on_floor():
 		if direction:
+			stopped = false
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 			hands.bob(delta)
+			
+			#if sword_tugging:
+				##if global_position + direction is closer to grappel_point than global_position:
+				#var distance_from_sword = grappel_point - global_position
+				#if (distance_from_sword  - direction).length() >  distance_from_sword.length():
+					#print(distance_from_sword.length())
+					##print(velocity.x)
+					##print(velocity.z)
+					#velocity.x = velocity.x / (distance_from_sword.length() * distance_from_sword.length())
+					#velocity.z = velocity.y / (distance_from_sword.length() * distance_from_sword.length())
+					
 		else:
-			#velocity.x = move_toward(velocity.x, 0, SPEED)
-			#velocity.z = move_toward(velocity.z, 0, SPEED)
-			velocity.x -= velocity.x/4
-			velocity.z -= velocity.z/4
+			if !stopped:
+				velocity.x = move_toward(velocity.x, 0, SPEED)
+				velocity.z = move_toward(velocity.z, 0, SPEED)
 			bobber.position.y = lerp(bobber.position.y, 0.0, delta*5)
 			bobber.position.x = lerp(bobber.position.x, 0.0, delta*5)
+			if velocity == Vector3.ZERO:
+				stopped = true
 	else:
 		if direction:
+			stopped = false
 			velocity.x += direction.x * SPEED/50      #speed divied to scale
 			velocity.z += direction.z * SPEED/50      #with speed on ground
 		else:
@@ -138,11 +152,10 @@ func throw_sword():
 	
 func sword_hit():
 	grappel_point = main.get_node("Sword Projectile").global_position
-	print(grappel_point)
 
 func sword_recall():
 	sword_tugging = false
 	grappel_point = Vector3.ZERO
-	print(grappel_point)
+	stopped = false
 
 	

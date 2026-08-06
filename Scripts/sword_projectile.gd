@@ -8,11 +8,15 @@ signal sword_recalled
 @export var stiffness = 6.0
 @export var damping = 0.0
 @export var scroll_speed = 0.2
+@export var max_chain_length = 25
+@export var scroll_cooldown: float = 0.02
 
 @onready var player = get_tree().current_scene.get_node("Player")
 @onready var playerHands = player.get_node("Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCamera")
 @onready var reel = playerHands.get_node("Hands/Reel/woodReel")
+@onready var audio_player = $AudioStreamPlayer3D
 
+var cooldown_timer: float = 0.0
 var dir : Vector2
 var spawnPos : Vector3
 var spawnRot : Vector3
@@ -35,31 +39,47 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	if cooldown_timer > 0.0:
+		cooldown_timer -= delta
+	
 	if attached:
-		#if player.is_on_floor() and !scroll_offset:
+		print(resting_length + crank_amount)
+		if player.is_on_floor() and player.is_moving:
 			#if resting_length + crank_amount  + scroll_offset != player.global_position.distance_to(final_position):
 				#change_crank(player.global_position.distance_to(final_position) - resting_length - crank_amount - scroll_offset)
-		#else:
-			#print("!")
+			if resting_length + crank_amount + scroll_offset != player.global_position.distance_to(final_position):
+				change_crank(player.global_position.distance_to(final_position) - resting_length - crank_amount - scroll_offset)
 		grapple(delta)
 		return
 	var movement_vector = Vector3(0, dir.y * SPEED, -SPEED).rotated(Vector3.UP, dir.x) * delta
-	var collision_check = move_and_collide(movement_vector)
+	var collision = move_and_collide(movement_vector)
 	
 	
-	if collision_check:
+	if collision:
 		attached = true
 		final_position = global_position
 		resting_length = starting_position.distance_to(final_position)
+		print(starting_position.distance_to(final_position))
+		if starting_position.distance_to(final_position) > max_chain_length:
+			#throw sowrd without grapple
+			_kill_sword()
+			return
+		
 		sword_hit.emit()
+		
 
 func _input(event: InputEvent) -> void:
-	if event.is_action("Wheel Up"):
+	if event.is_action("Wheel Up") and !(player.is_moving and player.is_on_floor()):
 		change_crank(-scroll_speed)
 		scroll_offset += scroll_speed
-	elif event.is_action("Wheel Down"):
+		if cooldown_timer <= 0.0:
+			cooldown_timer += scroll_cooldown
+	elif event.is_action("Wheel Down") and !(player.is_moving and player.is_on_floor()):
 		change_crank(scroll_speed)
 		scroll_offset -= scroll_speed
+		if cooldown_timer <= 0.0:
+			cooldown_timer += scroll_cooldown
+		
 
 func grapple(delta : float):
 	var chain_dist = player.global_position.distance_to(final_position)
@@ -82,15 +102,28 @@ func grapple(delta : float):
 		var damping_value = damping * vel_dot * chain_dir
 	
 		force = -spring_force + damping_value
+		if player.is_on_floor() and force.y < 0:
+			force.y = 0
+		
+		
 		player.velocity += force * delta
+		
 		player.sword_tugging = true
 	else:
 		player.sword_tugging = false
+		player.stopped = false
 
 func change_crank(cranked : float):
-	crank_amount += cranked
-	reel.rotation.z += sign(cranked) * 0.1
-	
+	if resting_length + crank_amount + cranked > 0:
+		if cooldown_timer <= 0.0:
+			crank_amount += cranked
+			#cooldown_timer += scroll_cooldown
+		reel.rotation.z += sign(cranked) * 0.1
+
+	if resting_length + crank_amount > max_chain_length:
+		#snap chain
+		print("snap")
+		_kill_sword()
 
 func _kill_sword() -> void:
 	sword_recalled.emit()
