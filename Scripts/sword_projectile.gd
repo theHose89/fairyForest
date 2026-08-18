@@ -15,6 +15,7 @@ signal sword_recalled
 @onready var playerHands = player.get_node("Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCamera")
 @onready var reel = playerHands.get_node("Hands/Reel/woodReel")
 @onready var audio_player = $AudioStreamPlayer3D
+@onready var chain = $chain
 
 var cooldown_timer: float = 0.0
 var dir : Vector2
@@ -36,11 +37,16 @@ func _ready() -> void:
 	player.return_sword.connect(_kill_sword)
 	add_collision_exception_with(player)
 
+func _process(_delta: float) -> void:
+	var chain_vector = reel.global_position
+	#chain_vector.y += 0.5
+	chain.look_at(chain_vector, Vector3.UP)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if cooldown_timer > 0.0:
 		cooldown_timer -= delta
+	
 	
 	if attached:
 		print(resting_length + crank_amount)
