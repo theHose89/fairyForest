@@ -18,6 +18,11 @@ shape = SubResource("BoxShape3D_jjgbg")
 [node name="Pivot" type="Node3D" parent="." unique_id=1321278992]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66011333, 0)
 
+[node name="RayCast3D" type="RayCast3D" parent="Pivot" unique_id=519161388]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -0.66011333, 0)
+target_position = Vector3(0, 50, 0)
+debug_shape_thickness = 5
+
 [node name="Bobber" type="Node3D" parent="Pivot" unique_id=1584591752]
 
 [node name="Camera3D" type="Camera3D" parent="Pivot/Bobber" unique_id=168960777]
@@ -45,3 +50,9 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/SwordHitBox" unique_id=1002013293]
 transform = Transform3D(1, 0, 6.2584877e-07, 0, 1, 0, -6.2584877e-07, 0, 1, 1.8292422, -0.06853855, -0.14350244)
 shape = SubResource("BoxShape3D_cvnsp")
+
+[node name="reel_orgin" type="Node3D" parent="." unique_id=1258664941]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.051729336, -0.0038561523, -0.1265815)
+
+[node name="reeling_point" type="Node3D" parent="reel_orgin" unique_id=207244212]
+transform = Transform3D(0.039999936, 0, -6.981313e-05, 0, 0.04, 0, 6.981313e-05, 0, 0.039999936, 0, 0, 0)

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TrenchBroomGameConfig" format=3 uid="uid://c2e43wqp2ponn"]
+
+[ext_resource type="Resource" uid="uid://b4xhdj0e16lop" path="res://addons/func_godot/game_config/trenchbroom/tb_face_tag_clip.tres" id="1_vwfao"]
+[ext_resource type="Resource" uid="uid://ca7377sfgj074" path="res://addons/func_godot/game_config/trenchbroom/tb_face_tag_skip.tres" id="2_e3b1t"]
+[ext_resource type="Resource" uid="uid://bkjxc54mmdhbo" path="res://addons/func_godot/game_config/trenchbroom/tb_face_tag_origin.tres" id="3_eiqv5"]
+[ext_resource type="Resource" uid="uid://3m4r3ofruqcj" path="res://fgd.tres" id="4_vwfao"]
+[ext_resource type="Texture2D" uid="uid://decwujsyhj0qy" path="res://addons/func_godot/icon32.png" id="5_hscf6"]
+[ext_resource type="Script" uid="uid://cx44c4vnq8bt5" path="res://addons/func_godot/src/trenchbroom/trenchbroom_game_config.gd" id="6_enym1"]
+
+[resource]
+script = ExtResource("6_enym1")
+game_name = "forest"
+fgd_file = ExtResource("4_vwfao")
+metadata/_custom_type_script = "uid://cx44c4vnq8bt5"

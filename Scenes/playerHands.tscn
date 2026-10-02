@@ -306,6 +306,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_j30de")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_43yhm"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_43yhm"]
+top_radius = 0.01
+bottom_radius = 0.01
+height = 1.0
+radial_segments = 10
+
 [sub_resource type="Animation" id="Animation_1qe5g"]
 length = 0.001
 tracks/0/type = "value"
@@ -367,7 +376,7 @@ script = ExtResource("1_4y2wh")
 [node name="Hands" type="Node3D" parent="." unique_id=1136061683]
 
 [node name="Sword" type="Node3D" parent="Hands" unique_id=1403379672]
-transform = Transform3D(-0.17364812, 0, 0.9848073, 0, 0.99999994, 0, -0.9848073, 0, -0.17364812, 0.164, -0.047, -0.448)
+transform = Transform3D(-0.1736481, 0, 0.98480725, 0, 0.99999994, 0, -0.98480725, 0, -0.1736481, 0.164, -0.047, -0.448)
 
 [node name="sword_mesh" type="Node3D" parent="Hands/Sword" unique_id=439946249]
 transform = Transform3D(0.175, 0, 0, 0, 0.125, 0, 0, 0, 0.175, 0, 0, 0)
@@ -404,6 +413,14 @@ mesh = SubResource("ArrayMesh_6cs7c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.44141316, -0.66158515, 0, 0.9912815)
 layers = 2
 mesh = SubResource("ArrayMesh_lkhyv")
+
+[node name="chain" type="Node3D" parent="Hands/Reel" unique_id=1824468219]
+transform = Transform3D(1.5298985e-09, 0, 0.035, 0, -0.034999996, 0, -0.035, 0, 1.5298985e-09, 0.0406684, 0.021640442, -0.015558358)
+
+[node name="Torus" type="MeshInstance3D" parent="Hands/Reel/chain" unique_id=588730822]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_43yhm")
+mesh = SubResource("CylinderMesh_43yhm")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Hands/Reel" unique_id=993756237]
 libraries/ = SubResource("AnimationLibrary_fsqel")

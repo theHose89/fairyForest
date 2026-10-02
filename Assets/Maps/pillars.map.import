@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://bncujr8c6crtq"
+path="res://.godot/imported/pillars.map-de20743a2eda6827e7c6d7168bb4712b.tres"
+
+[deps]
+
+source_file="res://Assets/Maps/pillars.map"
+dest_files=["res://.godot/imported/pillars.map-de20743a2eda6827e7c6d7168bb4712b.tres"]
+
+[params]
+

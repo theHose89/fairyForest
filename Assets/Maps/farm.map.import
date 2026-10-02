@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://bwicofxebq62r"
+path="res://.godot/imported/farm.map-3e85a1dba43c5fd6532e69349b1e67d8.tres"
+
+[deps]
+
+source_file="res://Assets/Maps/farm.map"
+dest_files=["res://.godot/imported/farm.map-3e85a1dba43c5fd6532e69349b1e67d8.tres"]
+
+[params]
+
