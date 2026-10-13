@@ -27,6 +27,7 @@ var final_position := Vector3.ZERO
 var attached := false
 var crank_amount = 0
 var scroll_offset = 0
+var saved_target_pos : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,8 +54,17 @@ func _process(_delta: float) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	#print(snappedf(get_chain_length(), 1))
+	var movement_vector = ray_vec * SPEED * delta
+	var collision = move_and_collide(movement_vector)
 	
 	if attached:
+		if collision:
+			if collision.get_collider().global_position != saved_target_pos:
+				position += collision.get_collider().global_position - saved_target_pos
+				final_position += collision.get_collider().global_position - saved_target_pos
+				player.grappel_point += collision.get_collider().global_position - saved_target_pos
+				saved_target_pos = collision.get_collider().global_position
+		
 		if player.is_on_floor() and player.is_moving:
 			if resting_length + crank_amount + scroll_offset != player.global_position.distance_to(final_position):
 				scroll_offset = 0
@@ -68,9 +78,6 @@ func _physics_process(delta: float) -> void:
 		return
 	else:
 		player.grappel_point = global_position
-	
-	var movement_vector = ray_vec * SPEED * delta
-	var collision = move_and_collide(movement_vector)
 	
 	if collision:
 		start_grapple(collision.get_collider())
@@ -123,6 +130,7 @@ func start_grapple(collider : Node3D):
 	
 	attached = true
 	final_position = global_position
+	saved_target_pos = collider.global_position
 	#helps out player a bit by shorting chian if in airs
 	if player.is_on_floor():
 		resting_length = starting_position.distance_to(final_position)
@@ -131,8 +139,6 @@ func start_grapple(collider : Node3D):
 		if resting_length < 0:
 			resting_length = 0
 	#resting_length = snappedf(resting_length, 0.01)
-	
-
 	
 	sword_hit.emit()
 

@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://doic3qvkoyqph"]
 
-[ext_resource type="Script" uid="uid://bt8erbq2npqyx" path="res://Scenes/wisp.gd" id="1_ngh0q"]
+[ext_resource type="Script" uid="uid://bt8erbq2npqyx" path="res://Scripts/wisp.gd" id="1_ngh0q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bi7hu"]
 resource_name = "Material"
