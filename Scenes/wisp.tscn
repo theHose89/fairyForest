@@ -55,3 +55,7 @@ mesh = SubResource("ArrayMesh_s82by")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1997566322]
 shape = SubResource("SphereShape3D_h33sr")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="." unique_id=1707662397]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
