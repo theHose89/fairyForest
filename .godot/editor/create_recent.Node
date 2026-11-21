@@ -1,0 +1,15 @@
+Area3D
+CollisionShape3D
+CharacterBody3D
+GPUParticles3D
+Node3D
+Sprite2D
+MeshInstance2D
+ColorRect
+CanvasLayer
+MeshInstance3D
+OmniLight3D
+CPUParticles2D
+CPUParticles3D
+VisibleOnScreenNotifier3D
+VisibleOnScreenEnabler3D

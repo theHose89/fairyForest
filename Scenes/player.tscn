@@ -28,7 +28,7 @@ debug_shape_thickness = 5
 [node name="Camera3D" type="Camera3D" parent="Pivot/Bobber" unique_id=168960777]
 cull_mask = 1048573
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Pivot/Bobber/Camera3D" unique_id=1108482288]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Pivot/Bobber/Camera3D" unique_id=1401912628]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -36,7 +36,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="SubViewport" type="SubViewport" parent="Pivot/Bobber/Camera3D/SubViewportContainer" unique_id=2043008695]
+[node name="SubViewport" type="SubViewport" parent="Pivot/Bobber/Camera3D/SubViewportContainer" unique_id=1619024217]
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 4
@@ -56,3 +56,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.051729336, -0.0038561523, -
 
 [node name="reeling_point" type="Node3D" parent="reel_orgin" unique_id=207244212]
 transform = Transform3D(0.039999936, 0, -6.981313e-05, 0, 0.04, 0, 6.981313e-05, 0, 0.039999936, 0, 0, 0)
+
+[node name="PlayerLight" type="OmniLight3D" parent="." unique_id=60484452]
+shadow_enabled = true
+omni_range = 20.0

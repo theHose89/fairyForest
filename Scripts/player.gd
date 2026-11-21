@@ -4,6 +4,8 @@ signal sword_thrown
 signal return_sword
 signal swing_sword
 signal sword_pulled_back
+signal player_dashed
+signal lower_sword
 
 
 @export var SPEED = 10
@@ -11,7 +13,9 @@ signal sword_pulled_back
 @export var JUMP_VELOCITY = 4.5
 @export var mouse_sensitivity: float = 0.003
 @export var KNOCKBACK = 6
-@export var dash_intesity = 12
+@export var dash_intesity = 15
+@export var dash_length = 0.5
+@export var maxHealth = 150
 
 @onready var hands := $Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCamera
 @onready var head := $Pivot
@@ -21,6 +25,7 @@ signal sword_pulled_back
 @onready var main := get_tree().get_root()
 @onready var sword_hit_box := $"Pivot/SwordHitBox"
 @onready var ray_cast := $Pivot/RayCast3D
+@onready var handheld_torch := $Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCamera/Hands/torch/GPUParticles3D
 
 var health: HealthComponent
 
@@ -29,6 +34,8 @@ var sword_tugging := false
 var is_moving = false
 var stopped = true
 var dashing := 0
+var dash_time := 0.0
+var dash_hit := []
 var grapeling := false
 
 #rotate head when mouse moved
@@ -58,7 +65,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	#if event.is_action_pressed("Dash"):
 		#dashing = 1
+	if event.is_action_pressed("Jump") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+		
 	
+	if dashing == 1:
+		return
+	
+	#handle grapple
 	if(event.is_action_pressed("Special Action")):
 		throw_sword()
 		sword_thrown.emit()
@@ -66,39 +80,43 @@ func _unhandled_input(event: InputEvent) -> void:
 		return_sword.emit()
 	if Input.is_action_pressed("Special Action"):
 		return
-	if(event.is_action_pressed("Action")):
+	
+	#handle swing	
+	if event.is_action_pressed("Action") and dashing == 0 and !is_on_floor():
+		if event.double_click:
+			dash()
+	if(event.is_action_pressed("Action")) and dashing != 1:
 		sword_swung()
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport.size = DisplayServer.window_get_size()
 	health = HealthComponent.new()
-	health.max_health = 150.0 
+	health.max_health = maxHealth
 	
 	health.init_health()
 	health.died.connect(_on_death)
 
 func _physics_process(delta: float) -> void:
-	$Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCamera.global_transform = camera.global_transform
+	#$Pivot/Bobber/Camera3D/SubViewportContainer/SubViewport/HandsCamera.global_transform = camera.global_transform
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	else:
-		dashing = 0
+		if dashing == 1:
+			lower_sword.emit()
+		if dashing != 0:
+			dashing = 0
 	
-	#if grapeling:
-		#hands.update_chain(global_position, grappel_point)
+	#checks hitbox for dash
+	if dashing == 1:
+		for body in sword_hit_box.get_overlapping_bodies():
+			if(body.name != "Player"):
+				basic_sword_knockback()
+			if body.is_in_group("Enemy") and !dash_hit.has(body):
+				body.health.damage(100)
+				dash_hit.append(body)
 	
-	# Handle jump.
-	if Input.is_action_just_pressed("Jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		
-	if Input.is_action_just_pressed("Dash") and dashing == 0 and !is_on_floor():
-		dashing = 1
-	
-	#hand off physics processing to grapple script
-	#if is_grappeling:
-		#return
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -141,18 +159,22 @@ func _physics_process(delta: float) -> void:
 			stopped = false
 			#velocity.x += direction.x * air_speed      
 			#velocity.z += direction.z * air_speed 
-		if dashing > 0:
+		if dash_time > 0:
+			if dash_time == dash_length:
+				var ray_direction = (ray_cast.to_global(ray_cast.target_position) - ray_cast.global_position).normalized()
+				velocity = ray_direction * dash_intesity
+			dash_time -= delta
+		elif dashing == 1:
+			lower_sword.emit()
 			dashing = -1
-			var ray_direction = (ray_cast.to_global(ray_cast.target_position) - ray_cast.global_position).normalized()
-			velocity = ray_direction * dash_intesity
-		else:
-			pass
 	
 	
 	move_and_slide()
+	
+
 
 func basic_sword_knockback():
-	if is_on_floor():
+	if is_on_floor() or dashing == 1:
 		return
 	
 	var max_y = sqrt(velocity.length()) * KNOCKBACK/2
@@ -185,6 +207,13 @@ func sword_swung():
 			basic_sword_knockback()
 		if body.is_in_group("Enemy"):
 			body.health.damage(100)
+			
+func dash():
+	dashing = 1
+	dash_hit = []
+	dash_time = dash_length
+	player_dashed.emit()
+
 func thrown_sword_hit():
 	grappel_point = main.get_node("Sword Projectile").global_position
 	grapeling = true

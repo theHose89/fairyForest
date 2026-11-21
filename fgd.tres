@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://drlmgulwbjwqu" path="res://addons/func_godot/src/fgd/func_godot_fgd_file.gd" id="1_ptpdh"]
 [ext_resource type="Resource" uid="uid://crgpdahjaj" path="res://addons/func_godot/fgd/func_godot_fgd.tres" id="1_t3dar"]
+[ext_resource type="Resource" uid="uid://46hvsbbf82el" path="res://Assets/Maps/entities/wisp_point.tres" id="2_7jryi"]
+[ext_resource type="Resource" uid="uid://bfxls6hmekxq2" path="res://Assets/Maps/entities/torch_point.tres" id="3_1tkxg"]
 
 [resource]
 script = ExtResource("1_ptpdh")
 fgd_name = "forest"
 base_fgd_files = Array[Resource]([ExtResource("1_t3dar")])
+entity_definitions = Array[Resource]([ExtResource("3_1tkxg"), ExtResource("2_7jryi")])
 metadata/_custom_type_script = "uid://drlmgulwbjwqu"

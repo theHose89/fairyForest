@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDPointClass" format=3 uid="uid://bfxls6hmekxq2"]
+
+[ext_resource type="Script" uid="uid://d1nwwgcrner8b" path="res://addons/func_godot/src/fgd/func_godot_fgd_point_class_display_descriptor.gd" id="1_i2gsd"]
+[ext_resource type="Script" uid="uid://cxsqwtsqd8w33" path="res://addons/func_godot/src/fgd/func_godot_fgd_point_class.gd" id="2_agpg5"]
+[ext_resource type="PackedScene" uid="uid://bjc71mkwu5ggr" path="res://Scenes/torch.tscn" id="2_lkkv3"]
+
+[resource]
+script = ExtResource("2_agpg5")
+scene_file = ExtResource("2_lkkv3")
+classname = "Torch"
+metadata/_custom_type_script = "uid://cxsqwtsqd8w33"

@@ -22,9 +22,13 @@ var reel_up = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	player.sword_thrown.connect(_throw_sword)
-	player.sword_pulled_back.connect(_reset_sword)
+	player.sword_pulled_back.connect(_lower_reel)
 	player.swing_sword.connect(_swing_sword)
+	player.player_dashed.connect(_sword_lunge)
+	player.return_sword.connect(_reset_sword)
+	player.lower_sword.connect(_lower_sword)
 	chain.hide()
+	top_level = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -83,6 +87,9 @@ func update_chain(start: Vector3, end: Vector3):
 
 func _swing_sword():
 	sword_animation_player.play("Swing")
+	
+func _sword_lunge():
+	sword_animation_player.play("Lunge")
 
 func _throw_sword():
 	sword_animation_player.play("Throw")
@@ -90,8 +97,14 @@ func _throw_sword():
 	reel_up = true
 	chain.show()
 	
-func _reset_sword():
+func _lower_reel():
 	sword_animation_player.play("RESET")
 	reel_animation_player.play("lower")
 	reel_up = false
 	chain.hide()
+	
+func _reset_sword():
+	sword_animation_player.play("RESET")
+	
+func _lower_sword():
+	sword_animation_player.play("Lower")

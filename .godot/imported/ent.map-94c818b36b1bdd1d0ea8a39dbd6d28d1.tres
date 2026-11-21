@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="QuakeMapFile" format=3]
+
+[ext_resource type="Script" uid="uid://cxvwf50mehesf" path="res://addons/func_godot/src/import/quake_map_file.gd" id="1_h4qdu"]
+
+[resource]
+script = ExtResource("1_h4qdu")
+revision = 1
+map_data = "// Game: forest
+// Format: Valve
+// entity 0
+{
+\"mapversion\" \"220\"
+\"wad\" \"\"
+\"classname\" \"worldspawn\"
+// brush 0
+{
+( -64 -64 -16 ) ( -64 -63 -16 ) ( -64 -64 -15 ) TinyBricks/Bricks_01-256x256 [ 0 -1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -64 -64 -16 ) ( -64 -64 -15 ) ( -63 -64 -16 ) TinyBricks/Bricks_01-256x256 [ 1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( -64 -64 -16 ) ( -63 -64 -16 ) ( -64 -63 -16 ) TinyBricks/Bricks_01-256x256 [ -1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 64 64 16 ) ( 64 65 16 ) ( 65 64 16 ) TinyBricks/Bricks_01-256x256 [ 1 0 0 0 ] [ 0 -1 0 0 ] 0 1 1
+( 64 64 16 ) ( 65 64 16 ) ( 64 64 17 ) TinyBricks/Bricks_01-256x256 [ -1 0 0 0 ] [ 0 0 -1 0 ] 0 1 1
+( 64 64 16 ) ( 64 64 17 ) ( 64 65 16 ) TinyBricks/Bricks_01-256x256 [ 0 1 0 0 ] [ 0 0 -1 0 ] 0 1 1
+}
+}
+// entity 1
+{
+\"classname\" \"Torch\"
+\"origin\" \"24 -8 24\"
+}
+"

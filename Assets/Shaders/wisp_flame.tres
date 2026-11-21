@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cuhqwi738t0iy"]
+
+[sub_resource type="Gradient" id="Gradient_ynf5e"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.29411766, 0.78039217, 1, 0.2509804)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h33sr"]
+gradient = SubResource("Gradient_ynf5e")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[resource]
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("GradientTexture2D_h33sr")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false

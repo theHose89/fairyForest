@@ -1,4 +1,4 @@
-// Game: FuncGodot
+// Game: forest
 // Format: Valve
 // entity 0
 {
@@ -375,4 +375,25 @@
 ( 176 -256 736 ) ( 175 -256 736 ) ( 176 -256 735 ) TinyTile/Tile_02-256x256 [ 1 0 1.2246467991473532e-16 80 ] [ -1.2246467991473532e-16 0 1 -16 ] 270 1 1
 ( 288 -336 752 ) ( 288 -335 752 ) ( 288 -336 751 ) TinyTile/Tile_02-256x256 [ 0 -1 0 0 ] [ -1.2246467991473532e-16 0 1 -16 ] 270 1 1
 }
+}
+// entity 1
+{
+"classname" "Torch"
+"origin" "1096 104 152"
+}
+// entity 2
+{
+"classname" "Wisp"
+"origin" "984 808 424"
+"angle" "0"
+}
+// entity 3
+{
+"classname" "Torch"
+"origin" "488 424 376"
+}
+// entity 4
+{
+"classname" "Torch"
+"origin" "664 -248 520"
 }

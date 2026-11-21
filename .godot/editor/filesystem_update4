@@ -1,0 +1,11 @@
+res://Scripts/wisp.gd
+res://Scenes/wisp.tscn
+res://Assets/Shaders/crt.gdshader
+res://Assets/Shaders/flame_particle_process_small.tres
+res://Assets/Materials/flame.tres
+res://Assets/Shaders/flame_particle_process.tres
+res://Assets/Shaders/wisp_flame.tres
+res://Assets/Shaders/overlay.gdshader
+res://Scenes/wispProj.tscn
+res://Scripts/wisp_proj.gd
+res://Scripts/player.gd

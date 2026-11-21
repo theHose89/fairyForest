@@ -1,0 +1,5 @@
+ShaderMaterial
+FuncGodotFGDPointClass
+FuncGodotFGDFile
+TrenchBroomGameConfig
+StandardMaterial3D

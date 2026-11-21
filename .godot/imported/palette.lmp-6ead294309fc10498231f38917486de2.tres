@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="QuakePaletteFile" format=3]
+
+[ext_resource type="Script" uid="uid://dqhjx7jjbif5d" path="res://addons/func_godot/src/import/quake_palette_file.gd" id="1_4wq3w"]
+
+[resource]
+script = ExtResource("1_4wq3w")
+colors = PackedColorArray(0, 0, 0, 1)

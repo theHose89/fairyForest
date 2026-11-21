@@ -8,4 +8,4 @@
 [resource]
 script = ExtResource("1_dlf23")
 entity_fgd = ExtResource("2_576s4")
-base_texture_dir = "res://Assets/textures/Tiny Texture"
+base_texture_dir = "res://Assets/textures/"

@@ -28,6 +28,7 @@ var attached := false
 var crank_amount = 0
 var scroll_offset = 0
 var saved_target_pos : Vector3
+var collider
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -54,16 +55,15 @@ func _process(_delta: float) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	#print(snappedf(get_chain_length(), 1))
-	var movement_vector = ray_vec * SPEED * delta
-	var collision = move_and_collide(movement_vector)
+	
 	
 	if attached:
-		if collision:
-			if collision.get_collider().global_position != saved_target_pos:
-				position += collision.get_collider().global_position - saved_target_pos
-				final_position += collision.get_collider().global_position - saved_target_pos
-				player.grappel_point += collision.get_collider().global_position - saved_target_pos
-				saved_target_pos = collision.get_collider().global_position
+		#if collision:
+		if collider.global_position != saved_target_pos:
+			position += collider.global_position - saved_target_pos
+			final_position += collider.global_position - saved_target_pos
+			player.grappel_point += collider.global_position - saved_target_pos
+			saved_target_pos = collider.global_position
 		
 		if player.is_on_floor() and player.is_moving:
 			if resting_length + crank_amount + scroll_offset != player.global_position.distance_to(final_position):
@@ -79,8 +79,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		player.grappel_point = global_position
 	
+	var movement_vector = ray_vec * SPEED * delta
+	var collision = move_and_collide(movement_vector)
+	
 	if collision:
-		start_grapple(collision.get_collider())
+		collider = collision.get_collider()
+		start_grapple()
 	else:
 		resting_length = starting_position.distance_to(global_position)
 		if resting_length > max_chain_length:
@@ -121,7 +125,7 @@ func grapple(delta : float):
 		player.sword_tugging = false
 		player.stopped = false
 
-func start_grapple(collider : Node3D):
+func start_grapple():
 	if collider.is_in_group("Enemy"):
 		collider.health.damage(50)
 		if collider.health.current_health == 0:
