@@ -22,9 +22,10 @@ https://www.shadertoy.com/view/MsjXzh
 
 shader_type canvas_item;
 
-uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear;
 
 uniform vec2 resolution = vec2(320.0, 180.0);
+uniform vec2 screen_size = vec2(1152, 648);
 
 uniform float scan_line_amount :hint_range(0.0, 1.0) = 1.0;
 uniform float warp_amount :hint_range(0.0, 5.0) = 0.1;
@@ -39,6 +40,7 @@ uniform float roll_line_amount :hint_range(0.0, 1.0) = 0.3;
 uniform float roll_speed :hint_range(-8.0, 8.0) = 1.0;
 uniform float scan_line_strength :hint_range(-12.0, -1.0) = -8.0;
 uniform float pixel_strength :hint_range(-4.0, 0.0) = -2.0;
+
 
 float random(vec2 uv){
     return fract(cos(uv.x * 83.4827 + uv.y * 92.2842) * 43758.5453123);
@@ -56,7 +58,16 @@ vec3 fetch_pixel(vec2 uv, vec2 off){
 		return vec3(0.0, 0.0, 0.0);
 	}
 
-	vec3 clr = texture(SCREEN_TEXTURE , pos, -16.0).rgb + noise;
+	// old
+	 //vec3 clr = texture(SCREEN_TEXTURE, pos, -16.0).rgb + noise;
+
+	// new: average each low-res cell instead of grabbing one point
+	vec2 q = 0.25 / resolution;
+	vec3 clr = texture(SCREEN_TEXTURE, pos + vec2(-q.x, -q.y)).rgb;
+	clr += texture(SCREEN_TEXTURE, pos + vec2( q.x, -q.y)).rgb;
+	clr += texture(SCREEN_TEXTURE, pos + vec2(-q.x,  q.y)).rgb;
+	clr += texture(SCREEN_TEXTURE, pos + vec2( q.x,  q.y)).rgb;
+	clr = clr * 0.25 + noise;
 	return clr;
 }
 

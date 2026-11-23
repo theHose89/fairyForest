@@ -9,3 +9,7 @@ res://Assets/Shaders/overlay.gdshader
 res://Scenes/wispProj.tscn
 res://Scripts/wisp_proj.gd
 res://Scripts/player.gd
+res://Scenes/main.tscn
+res://Scripts/player_hands.gd
+res://Scenes/color_rect.gd
+res://Scripts/sword_projectile.gd

@@ -14,20 +14,21 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d1ilt"]
 shader = ExtResource("1_hptm8")
-shader_parameter/resolution = Vector2(416, 180)
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/screen_size = Vector2(1152, 720)
 shader_parameter/scan_line_amount = 0.0
 shader_parameter/warp_amount = 0.0
-shader_parameter/noise_amount = 0.050000002375
-shader_parameter/interference_amount = 0.2
+shader_parameter/noise_amount = 0.010000000475
+shader_parameter/interference_amount = 0.2000000095
 shader_parameter/grille_amount = 0.0
 shader_parameter/grille_size = 1.0
 shader_parameter/vignette_amount = 0.0
 shader_parameter/vignette_intensity = 0.4
-shader_parameter/aberation_amount = 0.6000000285
+shader_parameter/aberation_amount = 1.0
 shader_parameter/roll_line_amount = 0.0
 shader_parameter/roll_speed = 1.0
 shader_parameter/scan_line_strength = -8.0
-shader_parameter/pixel_strength = -2.0
+shader_parameter/pixel_strength = -4.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jjgbg"]
 sky_top_color = Color(0.14769846, 0.18732524, 0.23685187, 1)
@@ -238,30 +239,6 @@ texture = ExtResource("2_d1ilt")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2044223336]
 environment = SubResource("Environment_8gbba")
 
-[node name="Lights" type="Node3D" parent="." unique_id=310688495]
-transform = Transform3D(1, 0, -1.4901161e-08, 2.9802322e-08, 1.0000001, 0, -2.9802322e-08, 0, 1.0000001, -6.694252, 4.9876494, 14.400669)
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="Lights" unique_id=1099867986]
-transform = Transform3D(1, 0, 1.4901159e-08, -2.9802319e-08, 0.9999999, -4.440891e-16, 2.9802319e-08, 0, 0.9999999, 2.0497384, 13.58603, -9.536743e-07)
-visible = false
-shadow_enabled = true
-omni_range = 16.159
-omni_attenuation = 0.231
-
-[node name="OmniLight3D4" type="OmniLight3D" parent="Lights" unique_id=1682325022]
-transform = Transform3D(1, 0, 1.4901159e-08, -2.9802319e-08, 0.9999999, -4.440891e-16, 2.9802319e-08, 0, 0.9999999, 25.925228, 9.696554, -20.425514)
-visible = false
-shadow_enabled = true
-omni_range = 90.999
-omni_attenuation = 0.231
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="Lights" unique_id=1554972080]
-transform = Transform3D(1, 0, 1.4901159e-08, -2.9802319e-08, 0.9999999, -4.440891e-16, 2.9802319e-08, 0, 0.9999999, 36.35132, 12.424251, 6.8060093)
-visible = false
-shadow_enabled = true
-omni_range = 16.075
-omni_attenuation = 0.231
-
 [node name="Player" parent="." unique_id=522378305 instance=ExtResource("1_jjgbg")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.87856984, 0)
 
@@ -409,10 +386,6 @@ transform = Transform3D(-0.75, 0, -6.556708e-08, 0, 0.75, 0, 6.556708e-08, 0, -0
 
 [node name="entity_2_Wisp" parent="FuncGodotMap" unique_id=1584529327 instance=ExtResource("7_6bp64")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 25.25, 13.25, 30.75)
-bob_intensiy = null
-wisp_speed = null
-wisp_idle_dist = null
-attack_freq = null
 
 [node name="entity_3_Torch" parent="FuncGodotMap" unique_id=645581521 instance=ExtResource("1_ynf5e")]
 transform = Transform3D(-0.75, 0, -6.556708e-08, 0, 0.75, 0, 6.556708e-08, 0, -0.75, 13.25, 11.75, 15.25)

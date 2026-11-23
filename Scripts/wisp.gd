@@ -92,7 +92,6 @@ func _physics_process(delta: float) -> void:
 	#handle bobbing
 
 func attack():
-	print("!!!")
 	var proj = wisp_proj.instantiate()
 	proj.position = global_position
 	main.add_child.call_deferred(proj)
